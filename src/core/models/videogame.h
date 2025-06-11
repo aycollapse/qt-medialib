@@ -36,7 +36,7 @@ public:
 private:
     QString gameDirector;
     QString publisher;
-    QString mode;
+    QString mode; // single-player, co-op, multiplayer
 };
 
 #endif // VIDEOGAME_H
