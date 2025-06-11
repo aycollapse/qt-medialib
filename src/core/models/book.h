@@ -8,13 +8,13 @@
 class Book : public AbstractMedia {
 public:
     Book(
-        const QString& name = "book",
+        const QString& name = "Book",
         float rating = 0.0f,
-        const QString& genre = "none",
-        const QString& description = "none",
-        const QString& comment = "none",
-        const QDate& dateRelease = QDate(1900,0,0),
-        const QString& author = "none",
+        const QString& genre = "None",
+        const QString& description = "None",
+        const QString& comment = "None",
+        const QDate& dateRelease = QDate(1900,1,1),
+        const QString& author = "None",
         const QString& isbn = "0000000000000",
         const QString& bannerPath = "");
 
