@@ -13,6 +13,7 @@ public:
     AbstractMedia(
             const QString& name,
             float rating,
+            const QString& genre,
             const QString& description,
             const QString& comment,
             const QDate& dateRelease,
@@ -25,6 +26,7 @@ public:
     const QUuid& getId() const; //set with constructor
     const QString& getName() const;
     const float& getRating() const;
+    const QString& getGenre() const;
     const QString& getDescription() const;
     const QString& getComment() const;
     const QDate& getDateRelease() const;
@@ -34,6 +36,7 @@ public:
     //setters
     void setName(const QString& name);
     void setRating(const float& rating);
+    void setGenre(const QString& genre);
     void setDescription(const QString& description);
     void setComment(const QString& comment);
     void setDateRelease(const QDate& date);
@@ -43,6 +46,7 @@ protected:
     QUuid id;
     QString name;
     float rating;
+    QString genre;
     QString description;
     QString comment;
     QDate dateReleased;

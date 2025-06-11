@@ -1,9 +1,9 @@
 #include "book.h"
 
-Book::Book(const QString& name,float rating,const QString& description,const QString& comment,
+Book::Book(const QString& name,float rating,const QString& genre,const QString& description,const QString& comment,
         const QDate& dateReleased, const QString& author, const QString& isbn, const QString& bannerPath) 
 
-        : AbstractMedia(name,rating,description,comment,dateReleased,bannerPath), 
+        : AbstractMedia(name,rating,genre,description,comment,dateReleased,bannerPath), 
         author(author), 
         isbn(isbn) {}
 

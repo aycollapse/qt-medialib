@@ -10,6 +10,7 @@ public:
     Book(
         const QString& name = "book",
         float rating = 0.0f,
+        const QString& genre = "none",
         const QString& description = "none",
         const QString& comment = "none",
         const QDate& dateRelease = QDate(1900,0,0),
