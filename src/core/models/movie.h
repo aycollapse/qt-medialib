@@ -15,7 +15,7 @@ public:
         const QString& description = "None",
         const QString& comment = "None",
         const QDate& dateRelease = QDate(1900,1,1),
-        const QString& director = "None",
+        const QString& director = "Unknown",
         const QString& language = "None",
         const QTime& duration = QTime(0, 0),
         const QString& bannerPath = "");

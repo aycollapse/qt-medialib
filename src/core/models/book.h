@@ -14,7 +14,7 @@ public:
         const QString& description = "None",
         const QString& comment = "None",
         const QDate& dateRelease = QDate(1900,1,1),
-        const QString& author = "None",
+        const QString& author = "Unknown",
         const QString& isbn = "0000000000000",
         const QString& bannerPath = "");
 
