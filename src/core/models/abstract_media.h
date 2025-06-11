@@ -10,7 +10,14 @@ class Visitor;
 class AbstractMedia
 {
 public:
-    AbstractMedia();
+    AbstractMedia(
+            const QString& name,
+            float rating,
+            const QString& description,
+            const QString& comment,
+            const QDate& dateRelease,
+            const QString& bannerPath);
+
     virtual ~AbstractMedia() = 0;
     virtual void accept(Visitor& visitor) = 0;
 
@@ -18,10 +25,11 @@ public:
     const QUuid& getId() const; //set with constructor
     const QString& getName() const;
     const float& getRating() const;
-    const QString getDescription() const;
-    const QString getComment() const;
+    const QString& getDescription() const;
+    const QString& getComment() const;
     const QDate& getDateRelease() const;
     const QDate& getDateAdded() const; //set with constructor
+    const QString& getBannerPath() const;
 
     //setters
     void setName(const QString& name);
@@ -29,6 +37,7 @@ public:
     void setDescription(const QString& description);
     void setComment(const QString& comment);
     void setDateRelease(const QDate& date);
+    void setBannerPath(const QString& path);
 
 protected:
     QUuid id;
@@ -36,8 +45,9 @@ protected:
     float rating;
     QString description;
     QString comment;
-    QDate date_release;
-    QDate date_added;
+    QDate dateReleased;
+    QDate dateAdded;
+    QString bannerPath;
 };
 
 #endif // ABSTRACT_MEDIA_H
