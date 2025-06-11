@@ -3,8 +3,15 @@ CONFIG += c++17
 
 INCLUDEPATH += src
 
-SOURCES += $$files(src/*.cpp, true)
-HEADERS += $$files(src/*.h, true)
+SOURCES += $$files(src/*.cpp) \
+           $$files(src/core/models/*.cpp) \
+           $$files(src/core/visitors/*.cpp) \
+           $$files(src/gui/*.cpp)
+
+HEADERS += $$files(src/*.h) \
+           $$files(src/core/models/*.h) \
+           $$files(src/core/visitors/*.h) \
+           $$files(src/gui/*.h)
 
 OBJECTS_DIR = build/obj
 MOC_DIR = build/moc
