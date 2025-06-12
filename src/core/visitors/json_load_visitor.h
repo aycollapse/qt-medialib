@@ -1,0 +1,4 @@
+#ifndef JSON_LOAD_VISITOR_H
+#define JSON_LOAD_VISITOR_H
+
+#endif // JSON_LOAD_VISITOR_H

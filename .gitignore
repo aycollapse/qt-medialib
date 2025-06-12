@@ -40,5 +40,8 @@ target_wrapper.*
 # vscode stuff
 .vscode/
 
-# binary distributrions
-dist/
+# compiled app with its data
+app/
+
+# misc
+TODO.md
