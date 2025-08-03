@@ -6,21 +6,25 @@
 #include <QFileInfo>
 #include <QImage>
 
-#include "../visitors/json_save_visitor.h"
-#include "../visitors/json_load_visitor.h"
+#include "visitors/json_save_visitor.h"
+#include "visitors/json_load_visitor.h"
 #include "manager.h"
 
-Manager::Manager()
+Manager& Manager::getInstance()
 {
-    loadData();
+    static Manager manager_instance;
+    return manager_instance;
 }
 
-void Manager::addMedia(std::unique_ptr<AbstractMedia> media) {
+void Manager::addMedia(std::unique_ptr<AbstractMedia> media) 
+{
     mediaVector.push_back(std::move(media));
 }
 
-std::vector<std::unique_ptr<AbstractMedia>>& Manager::getMediaVector(){return mediaVector;}
-
+std::vector<std::unique_ptr<AbstractMedia>>& Manager::getMediaVector()
+{
+    return mediaVector;
+}
 
 void Manager::saveData()
 {

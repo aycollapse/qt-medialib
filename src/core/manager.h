@@ -4,13 +4,15 @@
 #include <QCoreApplication>
 #include <QDir>
 
-#include "abstract_media.h"
+#include "models/abstract_media.h"
 
-class Manager
+class Manager //singleton manager for all media
 {   
 public:
-    Manager();
+    Manager(const Manager&) = delete;
     ~Manager() = default;
+
+    static Manager& getInstance();
 
     void saveData();
     void loadData();
@@ -23,6 +25,8 @@ public:
     std::vector<std::unique_ptr<AbstractMedia>>& getMediaVector();
 
 private:
+    Manager(){}
+
     std::vector<std::unique_ptr<AbstractMedia>> mediaVector;
 
     QDir rootDir = QCoreApplication::applicationDirPath();
