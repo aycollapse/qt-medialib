@@ -1,4 +1,0 @@
-#ifndef MEDIA_CARD_VISITOR_H
-#define MEDIA_CARD_VISITOR_H
-
-#endif // MEDIA_CARD_VISITOR_H

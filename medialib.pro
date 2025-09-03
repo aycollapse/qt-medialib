@@ -19,6 +19,6 @@ OBJECTS_DIR = build/obj
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
-DESTDIR = app
+DESTDIR = bin
 
 TARGET = medialib

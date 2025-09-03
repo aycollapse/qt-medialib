@@ -3,10 +3,13 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QJsonDocument>
+#include <memory>
+#include <vector>
 
 #include "models/abstract_media.h"
 
-class Manager //singleton manager for all media
+class Manager // singleton manager for all media
 {   
 public:
     Manager(const Manager&) = delete;
@@ -14,6 +17,7 @@ public:
 
     static Manager& getInstance();
 
+    // Existing features
     void saveData();
     void loadData();
 
@@ -21,18 +25,25 @@ public:
     void editMedia(std::unique_ptr<AbstractMedia> media);
     void removeMedia(const QUuid &id);
 
+    void setDefaultData(QString dataFolderPath);
+
     AbstractMedia *getMedia(const QUuid &id) const;
     std::vector<std::unique_ptr<AbstractMedia>>& getMediaVector();
 
+    bool exportData(const QString &destinationPath) const;
+    bool importData(const QString &sourcePath);
+
 private:
-    Manager(){}
+    Manager();
+
+    bool copyDirectoryRecursively(const QDir &src, const QDir &dst) const;
+    bool validateDataFolder(const QDir &dir, QString *errorOut = nullptr) const;
 
     std::vector<std::unique_ptr<AbstractMedia>> mediaVector;
 
-    QDir rootDir = QCoreApplication::applicationDirPath();
-    QString dataPath = rootDir.filePath("data/data.json");
-    QString imagesPath = rootDir.filePath("data/images");
+    QDir dataFolder;
+    QString userData;
+    QString imagesPath;
 };
 
-
-#endif 
+#endif // MANAGER_H
