@@ -17,9 +17,8 @@ public:
 
     static Manager& getInstance();
 
-    // Existing features
-    void saveData();
-    void loadData();
+    bool saveData();
+    bool loadData();
 
     void addMedia(std::unique_ptr<AbstractMedia> media);
     void editMedia(std::unique_ptr<AbstractMedia> media);

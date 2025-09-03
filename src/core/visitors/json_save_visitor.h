@@ -14,7 +14,8 @@ class JsonSaveVisitor : public Visitor {
 public:
     QJsonArray jsonArray;
 
-    void visit(Book& book) override {
+    void visit(Book& book) override 
+    {
         QJsonObject obj;
         obj["type"] = "book";
         obj["name"] = book.getName();
@@ -29,7 +30,8 @@ public:
         jsonArray.append(obj);
     }
 
-    void visit(Movie& movie) override {
+    void visit(Movie& movie) override 
+    {
         QJsonObject obj;
         obj["type"] = "movie";
         obj["name"] = movie.getName();
@@ -45,7 +47,8 @@ public:
         jsonArray.append(obj);
     }
 
-    void visit(Videogame& game) override {
+    void visit(Videogame& game) override 
+    {
         QJsonObject obj;
         obj["type"] = "videogame";
         obj["name"] = game.getName();

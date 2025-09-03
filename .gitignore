@@ -42,6 +42,7 @@ target_wrapper.*
 
 # compiled app with its data
 app/
+bin/
 
 # misc
 TODO.md
