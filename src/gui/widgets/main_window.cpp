@@ -1,5 +1,6 @@
 // mainwindow.cpp
-
+#include <QShortcut>
+#include <QKeySequence>
 #include <QWidgetAction>
 #include <QLineEdit>
 #include <QHBoxLayout>
@@ -14,6 +15,9 @@
 #include <QDebug>
 
 #include "main_window.h"
+
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -46,6 +50,10 @@ MainWindow::MainWindow(QWidget *parent)
     searchLayout->setContentsMargins(0,0,0,0);
     searchLayout->addWidget(searchBar);
 
+    // force focus to window, else when i open the app the focus is on the search bar and cant use shortcuts
+    searchBar->clearFocus();
+    this->setFocus(); 
+
     menuBar->setCornerWidget(searchContainer, Qt::TopRightCorner);
 
 
@@ -57,8 +65,24 @@ MainWindow::MainWindow(QWidget *parent)
     for (int i = 0; i < 20; ++i) {
         QPushButton *card = new QPushButton(QString("Item %1").arg(i+1));
         card->setFixedSize(150, 200);
+
+        // Questo devo metterlo poi in media_card
+        card->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(card, &QPushButton::customContextMenuRequested, this,
+                [this, card](const QPoint &pos) {
+            QMenu menu;
+            menu.addAction("Open", [card]() {
+                qDebug() << "Open" << card->text();
+            });
+            menu.addAction("Delete", [card]() {
+                qDebug() << "Delete" << card->text();
+            });
+            menu.exec(card->mapToGlobal(pos)); // show at mouse position
+        });
+
         flowLayout->addWidget(card);
     }
+
 
     centralWidgetContainer->setLayout(flowLayout);
 
@@ -69,6 +93,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(scrollArea);
     resize(1000, 600);
+
+    //shortcuts
+
+    // Ctrl+Q -> Quit
+    auto quitShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q), this);
+    connect(quitShortcut, &QShortcut::activated, this, &QWidget::close);
+
+    // Ctrl+E -> Export
+    auto exportShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_E), this);
+    connect(exportShortcut, &QShortcut::activated, this, &MainWindow::onExportClicked);
+
+    // Ctrl+I -> Import
+    auto importShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_I), this);
+    connect(importShortcut, &QShortcut::activated, this, &MainWindow::onImportClicked);
+
+    // Ctrl+F -> Search
+    auto searchShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this);
+    connect(searchShortcut, &QShortcut::activated, this, [this]() 
+    {
+        searchBar->setFocus();
+    });
 }
 
 void MainWindow::onHomeClicked() {
