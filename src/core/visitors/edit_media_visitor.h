@@ -1,4 +1,0 @@
-#ifndef EDIT_MEDIA_VISITOR
-#define EDIT_MEDIA_VISITOR
-
-#endif // EDIT_MEDIA_VISITOR

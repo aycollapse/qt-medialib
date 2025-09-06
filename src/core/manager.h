@@ -20,11 +20,12 @@ public:
     bool saveData();
     bool loadData();
 
-    void addMedia(std::unique_ptr<AbstractMedia> media);
-    void editMedia(std::unique_ptr<AbstractMedia> media);
-    void removeMedia(const QUuid &id);
+    bool addMedia(std::unique_ptr<AbstractMedia> media);
+    bool editMedia(const QUuid &id);
+    bool deleteMedia(const QUuid &id);
 
     void setDefaultData(QString dataFolderPath);
+    QString getDefaultData(){return dataFolder.absolutePath();}
 
     AbstractMedia *getMedia(const QUuid &id) const;
     std::vector<std::unique_ptr<AbstractMedia>>& getMediaVector();

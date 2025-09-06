@@ -41,12 +41,6 @@ void Manager::setDefaultData(QString dataFolderPath)
     userData = dataFolder.filePath("data.json");
 }
 
-void Manager::addMedia(std::unique_ptr<AbstractMedia> media) 
-{
-    mediaVector.push_back(std::move(media));
-    qDebug() << "Added media object";
-}
-
 std::vector<std::unique_ptr<AbstractMedia>>& Manager::getMediaVector()
 {
     return mediaVector;
@@ -167,6 +161,52 @@ bool Manager::loadData()
     qDebug() << "Data loaded successfully";
     return true;
 }
+
+bool Manager::addMedia(std::unique_ptr<AbstractMedia> media) 
+{
+    qDebug() << "Added item" << media->getName() << "with Id" << media->getId().toString();
+    mediaVector.push_back(std::move(media));
+    return true;
+}
+
+bool Manager::editMedia(const QUuid &id) 
+{
+    
+}
+
+bool Manager::deleteMedia(const QUuid &id)
+{
+    qDebug() << "Begin deletion, looking for" << id.toString();
+
+    for (auto it = mediaVector.begin(); it != mediaVector.end(); ++it)
+    {
+        if (!*it) {
+            qDebug() << "Null pointer in vector, skipping";
+            continue;
+        }
+
+        qDebug() << "Checking" << (*it)->getId().toString()
+                 << (*it)->getName();
+
+        if ((*it)->getId() == id)
+        {
+            qDebug() << "Candidate found" << (*it)->getName();
+
+            QString bannerPath = (*it)->getBannerPath();
+            if (!bannerPath.isEmpty() && QFile::exists(bannerPath))
+                QFile::remove(bannerPath);
+
+            mediaVector.erase(it);
+            qDebug() << "Item erased";
+            return true;
+        }
+    }
+
+    qDebug() << "No match found";
+    return false;
+}
+
+
 
 bool Manager::exportData(const QString &destinationPath) const
 {
