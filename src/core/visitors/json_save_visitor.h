@@ -17,6 +17,7 @@ public:
     void visit(Book& book) override 
     {
         QJsonObject obj;
+        obj["id"] = book.getId().toString();
         obj["type"] = "book";
         obj["name"] = book.getName();
         obj["rating"] = book.getRating();
@@ -33,6 +34,7 @@ public:
     void visit(Movie& movie) override 
     {
         QJsonObject obj;
+        obj["id"] = movie.getId().toString();
         obj["type"] = "movie";
         obj["name"] = movie.getName();
         obj["rating"] = movie.getRating();
@@ -50,6 +52,7 @@ public:
     void visit(Videogame& game) override 
     {
         QJsonObject obj;
+        obj["id"] = game.getId().toString();
         obj["type"] = "videogame";
         obj["name"] = game.getName();
         obj["rating"] = game.getRating();

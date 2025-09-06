@@ -17,6 +17,25 @@ Movie::Movie(
         language(language),
         duration(duration) {}
 
+Movie::Movie(
+        const QUuid& id,
+        const QString& name,
+        float rating,
+        const QString& genre,
+        const QString& description,
+        const QString& comment,
+        const QDate& dateReleased, 
+        const QString& director,
+        const QString& language,
+        const QTime& duration,
+        const QString& bannerPath)
+        
+        : AbstractMedia(id, name, rating, genre, description, comment, dateReleased, bannerPath),
+        director(director),
+        language(language),
+        duration(duration){}
+
+
 void Movie::accept(Visitor& visitor) {visitor.visit(*this);}
 
 // getters

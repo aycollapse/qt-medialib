@@ -17,6 +17,18 @@ public:
         const QString& author = "Unknown",
         const QString& isbn = "0000000000000",
         const QString& bannerPath = "");
+    
+    Book(
+        const QUuid& id,
+        const QString& name = "Book",
+        float rating = 0.0f,
+        const QString& genre = "None",
+        const QString& description = "None",
+        const QString& comment = "None",
+        const QDate& dateRelease = QDate(1900,1,1),
+        const QString& author = "Unknown",
+        const QString& isbn = "0000000000000",
+        const QString& bannerPath = "");
 
     ~Book() override = default;
 

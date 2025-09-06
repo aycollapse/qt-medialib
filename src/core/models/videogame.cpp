@@ -1,20 +1,39 @@
 #include "videogame.h"
 
 Videogame::Videogame(
-    const QString& name,
-    float rating,
-    const QString& genre,
-    const QString& description,
-    const QString& comment,
-    const QDate& dateRelease,
-    const QString& gameDirector,
-    const QString& publisher,
-    const QString& mode,
-    const QString& bannerPath)
-    : AbstractMedia(name, rating, genre, description, comment, dateRelease, bannerPath),
-      gameDirector(gameDirector),
-      publisher(publisher),
-      mode(mode) {}
+        const QString& name,
+        float rating,
+        const QString& genre,
+        const QString& description,
+        const QString& comment,
+        const QDate& dateRelease,
+        const QString& gameDirector,
+        const QString& publisher,
+        const QString& mode,
+        const QString& bannerPath)
+        : AbstractMedia(name, rating, genre, description, comment, dateRelease, bannerPath),
+        gameDirector(gameDirector),
+        publisher(publisher),
+        mode(mode) {}
+
+Videogame::Videogame(
+        const QUuid& id,
+        const QString& name,
+        float rating,
+        const QString& genre,
+        const QString& description,
+        const QString& comment,
+        const QDate& dateRelease,
+        const QString& gameDirector,
+        const QString& publisher,
+        const QString& mode,
+        const QString& bannerPath)
+        
+        : AbstractMedia(id, name, rating, genre, description, comment, dateRelease, bannerPath),
+        gameDirector(gameDirector),
+        publisher(publisher),
+        mode(mode){}
+
 
 void Videogame::accept(Visitor& visitor) {
     visitor.visit(*this);

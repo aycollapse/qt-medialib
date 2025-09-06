@@ -15,6 +15,24 @@ Book::Book(
         author(author), 
         isbn(isbn) {}
 
+Book::Book(
+        const QUuid& id,
+        const QString& name,
+        float rating,
+        const QString& genre,
+        const QString& description,
+        const QString& comment,
+        const QDate& dateReleased, 
+        const QString& author, 
+        const QString& isbn, 
+        const QString& bannerPath)
+        
+        : AbstractMedia(id, name, rating, genre, description, comment, dateReleased, bannerPath),
+        author(author),
+        isbn(isbn)
+{}
+
+
 void Book::accept(Visitor& visitor) {visitor.visit(*this);}
 
 // getters

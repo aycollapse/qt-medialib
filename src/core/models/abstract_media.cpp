@@ -13,6 +13,21 @@ AbstractMedia::AbstractMedia(const QString& name,float rating,const QString& gen
         dateAdded(QDate::currentDate()),
         bannerPath(bannerPath){}
 
+AbstractMedia::AbstractMedia(const QUuid& id, const QString& name, float rating, const QString& genre, 
+    const QString& description, const QString& comment, const QDate& dateReleased, const QString& bannerPath)
+
+        : id(id),
+        name(name),
+        rating(rating),
+        genre(genre),
+        description(description),
+        comment(comment),
+        dateReleased(dateReleased),
+        dateAdded(QDate::currentDate()),
+        bannerPath(bannerPath)
+{}
+
+
 AbstractMedia::~AbstractMedia() {}
 
 // getters

@@ -19,6 +19,19 @@ public:
         const QString& mode = "None",
         const QString& bannerPath = "");
 
+    Videogame(
+        const QUuid& id,
+        const QString& name = "Videogame",
+        float rating = 0.0f,
+        const QString& genre = "None",
+        const QString& description = "None",
+        const QString& comment = "None",
+        const QDate& dateRelease = QDate(1900, 1, 1),
+        const QString& gameDirector = "Unknown",
+        const QString& publisher = "Unknown",
+        const QString& mode = "None",
+        const QString& bannerPath = "");
+
     ~Videogame() override = default;
 
     void accept(Visitor& visitor) override;

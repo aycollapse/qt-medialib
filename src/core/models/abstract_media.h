@@ -10,14 +10,15 @@ class Visitor;
 class AbstractMedia
 {
 public:
-    AbstractMedia(
-            const QString& name,
-            float rating,
-            const QString& genre,
-            const QString& description,
-            const QString& comment,
-            const QDate& dateRelease,
-            const QString& bannerPath);
+    AbstractMedia(const QString& name, float rating, const QString& genre,
+                const QString& description, const QString& comment,
+                const QDate& dateReleased, const QString& bannerPath);
+
+    // for loading with an existing quuid
+    AbstractMedia(const QUuid& id, const QString& name, float rating, const QString& genre,
+                const QString& description, const QString& comment,
+                const QDate& dateReleased, const QString& bannerPath);
+
 
     virtual ~AbstractMedia() = 0;
     virtual void accept(Visitor& visitor) = 0;

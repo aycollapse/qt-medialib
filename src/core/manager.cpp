@@ -153,9 +153,11 @@ bool Manager::loadData()
 
         JsonLoadVisitor loadVisitor;
         loadVisitor.loadFromJsonArray(doc.array());
-
+        
+        mediaVector.clear(); //clear otherwise the load appends to the current list
         for (auto &media : loadVisitor.loadedMedia) 
         {
+            qDebug() << "Loaded item" << media->getName() << "with Id" << media->getId().toString();
             mediaVector.push_back(std::move(media));
         }
 

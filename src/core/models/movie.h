@@ -20,6 +20,19 @@ public:
         const QTime& duration = QTime(0, 0),
         const QString& bannerPath = "");
 
+    Movie(
+        const QUuid& id,
+        const QString& name = "Movie",
+        float rating = 0.0f,
+        const QString& genre = "None",
+        const QString& description = "None",
+        const QString& comment = "None",
+        const QDate& dateRelease = QDate(1900,1,1),
+        const QString& director = "Unknown",
+        const QString& language = "None",
+        const QTime& duration = QTime(0, 0),
+        const QString& bannerPath = "");
+
     ~Movie() override = default;
 
     void accept(Visitor& visitor) override;

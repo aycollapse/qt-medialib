@@ -29,6 +29,7 @@ public:
             if (type == "book") 
             {
                 loadedMedia.push_back(std::make_unique<Book>(
+                    QUuid(obj["id"].toString()),
                     obj["name"].toString(),
                     obj["rating"].toDouble(),
                     obj["genre"].toString(),
@@ -43,6 +44,7 @@ public:
             else if (type == "movie") 
             {
                 loadedMedia.push_back(std::make_unique<Movie>(
+                    QUuid(obj["id"].toString()),
                     obj["name"].toString(),
                     static_cast<float>(obj["rating"].toDouble()),
                     obj["genre"].toString(),
@@ -58,6 +60,7 @@ public:
             else if (type == "videogame") 
             {
                 loadedMedia.push_back(std::make_unique<Videogame>(
+                    QUuid(obj["id"].toString()),
                     obj["name"].toString(),
                     static_cast<float>(obj["rating"].toDouble()),
                     obj["genre"].toString(),
