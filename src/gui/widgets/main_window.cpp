@@ -17,6 +17,10 @@
 #include <QSlider>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QFormLayout>
+#include <QFile>
+#include <QFileInfo>
+#include <QDir>
 
 #include "main_window.h"
 #include "../../core/models/book.h"
@@ -24,6 +28,8 @@
 #include "../../core/models/videogame.h"
 #include "../../core/models/manager.h"
 #include "../visitors/media_details_visitor.h"
+#include "common/file_browser_dialog.h"
+#include "common/help_dialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -248,6 +254,59 @@ void MainWindow::showDetailsView(AbstractMedia* media)
     formWidget->setObjectName("detailsForm");  
     layout->addWidget(formWidget);
 
+    // add banner path picker button next to bannerPath line edit
+    QLineEdit* bannerEdit = formWidget->findChild<QLineEdit*>("bannerPath");
+    if (bannerEdit) {
+        QWidget* pickerContainer = new QWidget(detailsView);
+        QHBoxLayout* pickerLayout = new QHBoxLayout(pickerContainer);
+        pickerLayout->setContentsMargins(0,0,0,0);
+        pickerLayout->addStretch();
+        QPushButton* pickButton = new QPushButton("Choose...", pickerContainer);
+        pickerLayout->addWidget(pickButton);
+        layout->addWidget(pickerContainer);
+
+        connect(pickButton, &QPushButton::clicked, this, [this, bannerEdit]() {
+            QString path = FileBrowserDialog::getPath(FileBrowserDialog::SelectFile, this);
+            if (path.isEmpty()) return;
+
+            // Try to copy into app data images folder first
+            QString destPath = path;
+            QString dataFolder = Manager::getInstance().getDefaultData();
+            QDir imagesDir(QDir(dataFolder).filePath("images"));
+            if (!imagesDir.exists()) {
+                QDir().mkpath(imagesDir.absolutePath());
+            }
+
+            QFileInfo srcInfo(path);
+            QString baseName = srcInfo.fileName();
+            QString candidate = imagesDir.filePath(baseName);
+
+            // avoid overwriting existing file by appending a suffix if needed
+            if (QFile::exists(candidate)) {
+                QString base = srcInfo.completeBaseName();
+                QString suf = srcInfo.suffix();
+                int i = 1;
+                QString tryName;
+                do {
+                    if (suf.isEmpty()) tryName = QString("%1_%2").arg(base).arg(i);
+                    else tryName = QString("%1_%2.%3").arg(base).arg(i).arg(suf);
+                    candidate = imagesDir.filePath(tryName);
+                    ++i;
+                } while (QFile::exists(candidate) && i < 1000);
+            }
+
+            bool copied = false;
+            if (!QFile::exists(candidate)) {
+                copied = QFile::copy(path, candidate);
+            }
+
+            if (copied) destPath = candidate;
+
+            bannerEdit->setText(destPath);
+            // The change is only persisted when user presses Save
+         });
+    }
+
     QWidget* buttonContainer = new QWidget(detailsView);
     QHBoxLayout* buttonLayout = new QHBoxLayout(buttonContainer);
     buttonLayout->setContentsMargins(0, 0, 0, 0);
@@ -292,15 +351,36 @@ void MainWindow::onHomeClicked()
 }
 
 void MainWindow::onExportClicked() {
-    qDebug() << "Export clicked";
+    // ask for directory to export to
+    QString path = FileBrowserDialog::getPath(FileBrowserDialog::SelectDirectory, this);
+    if (path.isEmpty()) return;
+
+    bool ok = Manager::getInstance().exportData(path);
+    if (!ok) {
+        qWarning() << "Export failed to" << path;
+    } else {
+        qDebug() << "Exported to" << path;
+    }
 }
 
 void MainWindow::onImportClicked() {
-    qDebug() << "Import clicked";
+    // ask for directory to import from
+    QString path = FileBrowserDialog::getPath(FileBrowserDialog::SelectDirectory, this);
+    if (path.isEmpty()) return;
+
+    bool ok = Manager::getInstance().importData(path);
+    if (!ok) {
+        qWarning() << "Import failed from" << path;
+    } else {
+        qDebug() << "Imported from" << path;
+        // refresh view
+        updateHomeView();
+    }
 }
 
 void MainWindow::onHelpClicked() {
-    qDebug() << "Help clicked";
+    HelpDialog dlg(this);
+    dlg.exec();
 }
 
 void MainWindow::onMediaItemClicked(AbstractMedia* media)

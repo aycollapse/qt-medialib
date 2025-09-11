@@ -4,6 +4,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QFileInfo>
+#include <QFile>
 #include "../../core/visitors/visitor.h"
 #include "../../core/models/book.h"
 #include "../../core/models/movie.h"
@@ -36,21 +38,43 @@ public:
     }
 
     void visit(Book &book) override {
-        widget->setStyleSheet("QPushButton { background-color: #90EE90; border-radius: 10px; padding: 5px; }");  // Light green
+        QString banner = book.getBannerPath();
+        if (!banner.isEmpty() && QFileInfo::exists(banner)) {
+            // use the banner image as a scaled background
+            QString style = QString("QPushButton { border-image: url(%1) 0 0 0 0 stretch stretch; border-radius: 10px; padding: 5px; }")
+                                .arg(banner);
+            widget->setStyleSheet(style);
+        } else {
+            widget->setStyleSheet("QPushButton { background-color: #90EE90; border-radius: 10px; padding: 5px; }");  // Light green
+        }
         titleLabel->setText(book.getName());
         genreLabel->setText(book.getGenre());
         ratingLabel->setText(QString::number(book.getRating(), 'f', 1) + "/10");
     }
 
     void visit(Movie &movie) override {
-        widget->setStyleSheet("QPushButton { background-color: #FFB347; border-radius: 10px; padding: 5px; }");  // Light orange
+        QString banner = movie.getBannerPath();
+        if (!banner.isEmpty() && QFileInfo::exists(banner)) {
+            QString style = QString("QPushButton { border-image: url(%1) 0 0 0 0 stretch stretch; border-radius: 10px; padding: 5px; }")
+                                .arg(banner);
+            widget->setStyleSheet(style);
+        } else {
+            widget->setStyleSheet("QPushButton { background-color: #FFB347; border-radius: 10px; padding: 5px; }");  // Light orange
+        }
         titleLabel->setText(movie.getName());
         genreLabel->setText(movie.getGenre());
         ratingLabel->setText(QString::number(movie.getRating(), 'f', 1) + "/10");
     }
 
     void visit(Videogame &game) override {
-        widget->setStyleSheet("QPushButton { background-color: #87CEEB; border-radius: 10px; padding: 5px; }");  // Light blue
+        QString banner = game.getBannerPath();
+        if (!banner.isEmpty() && QFileInfo::exists(banner)) {
+            QString style = QString("QPushButton { border-image: url(%1) 0 0 0 0 stretch stretch; border-radius: 10px; padding: 5px; }")
+                                .arg(banner);
+            widget->setStyleSheet(style);
+        } else {
+            widget->setStyleSheet("QPushButton { background-color: #87CEEB; border-radius: 10px; padding: 5px; }");  // Light blue
+        }
         titleLabel->setText(game.getName());
         genreLabel->setText(game.getGenre());
         ratingLabel->setText(QString::number(game.getRating(), 'f', 1) + "/10");

@@ -10,7 +10,7 @@ AbstractMedia::AbstractMedia(const QString& name,float rating,const QString& gen
         description(description),
         comment(comment),
         dateReleased(dateReleased),
-        dateAdded(QDate::currentDate()),
+        //dateAdded(QDate::currentDate()),
         bannerPath(bannerPath){}
 
 AbstractMedia::AbstractMedia(const QUuid& id, const QString& name, float rating, const QString& genre, 
@@ -23,7 +23,7 @@ AbstractMedia::AbstractMedia(const QUuid& id, const QString& name, float rating,
         description(description),
         comment(comment),
         dateReleased(dateReleased),
-        dateAdded(QDate::currentDate()),
+        //dateAdded(QDate::currentDate()),
         bannerPath(bannerPath)
 {}
 
@@ -38,7 +38,7 @@ const QString& AbstractMedia::getGenre() const {return genre;}
 const QString& AbstractMedia::getDescription() const {return description;}
 const QString& AbstractMedia::getComment() const {return comment;}
 const QDate& AbstractMedia::getDateRelease() const {return dateReleased;}
-const QDate& AbstractMedia::getDateAdded() const {return dateAdded;}
+//const QDate& AbstractMedia::getDateAdded() const {return dateAdded;}
 const QString& AbstractMedia::getBannerPath() const {return bannerPath;}
 
 //setters

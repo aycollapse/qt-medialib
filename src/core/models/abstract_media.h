@@ -31,7 +31,7 @@ public:
     const QString& getDescription() const;
     const QString& getComment() const;
     const QDate& getDateRelease() const;
-    const QDate& getDateAdded() const; //set with constructor
+    //const QDate& getDateAdded() const; //set with constructor
     const QString& getBannerPath() const;
 
     //setters

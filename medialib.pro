@@ -13,7 +13,6 @@ SOURCES += $$files(src/*.cpp) \
            $$files(src/controller/*.cpp) \
            $$files(src/core/search/*.cpp)
 
-
 HEADERS += $$files(src/*.h) \
            $$files(src/core/models/*.h) \
            $$files(src/core/visitors/*.h) \

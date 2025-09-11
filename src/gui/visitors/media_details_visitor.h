@@ -40,7 +40,6 @@ public:
         isbnEdit->setValidator(validator);
 
         layout->addRow("Author:", authorEdit);
-        //TODO add validation for isbn (13 digits, no dashes)
         layout->addRow("ISBN 13:", isbnEdit);
     }
 
@@ -56,7 +55,6 @@ public:
         auto *languageEdit = new QLineEdit(movie.getLanguage());
         languageEdit->setObjectName("language");
         
-        // Replace QTimeEdit with two spin boxes: hours and minutes
         QWidget *durationContainer = new QWidget;
         QHBoxLayout *durationLayout = new QHBoxLayout(durationContainer);
         durationLayout->setContentsMargins(0,0,0,0);
@@ -90,7 +88,6 @@ public:
         auto *publisherEdit = new QLineEdit(game.getPublisher());
         publisherEdit->setObjectName("publisher");
         
-        // Mode as dropdown
         auto *modeCombo = new QComboBox;
         modeCombo->setObjectName("mode");
         modeCombo->addItems({"single-player", "multi-player", "co-op"});
