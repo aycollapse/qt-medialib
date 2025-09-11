@@ -8,8 +8,10 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-#include "visitors/json_save_visitor.h"
-#include "visitors/json_load_visitor.h"
+#include "../visitors/json_save_visitor.h"
+#include "../visitors/json_load_visitor.h"
+#include "../visitors/create_media_visitor.h"
+#include "../visitors/extract_details_visitor.h"
 #include "manager.h"
 
 Manager& Manager::getInstance()
@@ -169,9 +171,30 @@ bool Manager::addMedia(std::unique_ptr<AbstractMedia> media)
     return true;
 }
 
-bool Manager::editMedia(const QUuid &id) 
+bool Manager::editMedia(const QUuid &id, const QMap<QString, QString> &changes)
 {
-    
+    for (auto &media : mediaVector)
+    {
+        if (media && media->getId() == id)
+        {
+            QMap<QString, QString> currentFields;
+            ExtractDetailsVisitor extractor(currentFields); 
+            media->accept(extractor);
+
+            for (auto it = changes.begin(); it != changes.end(); ++it)
+                currentFields[it.key()] = it.value();
+
+            currentFields["id"] = id.toString();
+
+            CreateItemVisitor creator(currentFields);
+            media->accept(creator);
+            media = creator.takeItem();
+
+            saveData();
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Manager::deleteMedia(const QUuid &id)

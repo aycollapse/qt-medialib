@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 
-#include "models/abstract_media.h"
+#include "abstract_media.h"
 
 class Manager // singleton manager for all media
 {   
@@ -21,7 +21,7 @@ public:
     bool loadData();
 
     bool addMedia(std::unique_ptr<AbstractMedia> media);
-    bool editMedia(const QUuid &id);
+    bool editMedia(const QUuid &id, const QMap<QString, QString> &changes);
     bool deleteMedia(const QUuid &id);
 
     void setDefaultData(QString dataFolderPath);

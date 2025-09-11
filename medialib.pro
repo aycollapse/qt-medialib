@@ -9,7 +9,9 @@ SOURCES += $$files(src/*.cpp) \
            $$files(src/core/*.cpp) \
            $$files(src/gui/*.cpp) \
            $$files(src/gui/widgets/*.cpp) \
-           $$files(src/gui/widgets/common/*.cpp)
+           $$files(src/gui/widgets/common/*.cpp) \
+           $$files(src/controller/*.cpp) \
+           $$files(src/core/search/*.cpp)
 
 
 HEADERS += $$files(src/*.h) \
@@ -18,7 +20,9 @@ HEADERS += $$files(src/*.h) \
            $$files(src/core/*.h) \
            $$files(src/gui/*.h)\
            $$files(src/gui/widgets/*.h)\
-           $$files(src/gui/widgets/common/*.h)
+           $$files(src/gui/widgets/common/*.h)\
+           $$files(src/controller/*.h) \
+           $$files(src/core/search/*.h)
 
 OBJECTS_DIR = build/obj
 MOC_DIR = build/moc
