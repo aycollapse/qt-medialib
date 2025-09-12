@@ -44,22 +44,30 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupUI()
 {
+    this->setObjectName("MainWindow");
     QMenuBar *menuBar = new QMenuBar(this);
 
-    QAction *homeAction = new QAction("Home", this);
+    QAction *homeAction = new QAction(QIcon(":/icons/home.png"), "", this);
+    homeAction->setToolTip("Home");
+    homeAction->setIconVisibleInMenu(true);
     connect(homeAction, &QAction::triggered, this, &MainWindow::onHomeClicked);
     menuBar->addAction(homeAction);
 
-    QMenu *optionsMenu = new QMenu("Options", this);
-    QAction *exportAction = new QAction("Export", this);
-    QAction *importAction = new QAction("Import", this);
+    QMenu *optionsMenu = new QMenu(this);
+    optionsMenu->setIcon(QIcon(":/icons/settings.png"));
+    optionsMenu->setToolTipsVisible(true);
+    optionsMenu->setToolTip("Options");
+    QAction *exportAction = new QAction(QIcon(":/icons/export.svg"), "Export", this);
+    QAction *importAction = new QAction(QIcon(":/icons/import.svg"), "Import", this);
     connect(exportAction, &QAction::triggered, this, &MainWindow::onExportClicked);
     connect(importAction, &QAction::triggered, this, &MainWindow::onImportClicked);
     optionsMenu->addAction(exportAction);
     optionsMenu->addAction(importAction);
     menuBar->addMenu(optionsMenu);
 
-    QAction *helpAction = new QAction("Help", this);
+    QAction *helpAction = new QAction(QIcon(":/icons/help.png"), "", this);
+    helpAction->setToolTip("Help");
+    helpAction->setIconVisibleInMenu(true);
     connect(helpAction, &QAction::triggered, this, &MainWindow::onHelpClicked);
     menuBar->addAction(helpAction);
 
@@ -70,11 +78,13 @@ void MainWindow::setupUI()
 
     addMediaButton = new QToolButton(this);
     addMediaButton->setText("Add Media");
+    addMediaButton->setIcon(QIcon(":/icons/add.png")); 
     addMediaButton->setPopupMode(QToolButton::InstantPopup);
     setupAddMenu();
 
 
     QWidget *searchContainer = new QWidget(this);
+    searchContainer->setObjectName("SearchContainer");
     QHBoxLayout *searchLayout = new QHBoxLayout(searchContainer);
     searchLayout->setContentsMargins(0,0,0,0);
     searchLayout->addWidget(addMediaButton);
@@ -88,10 +98,12 @@ void MainWindow::setupUI()
     
 
     homeView = new QWidget(this);
+    homeView->setObjectName("HomeView");
     QVBoxLayout *homeLayout = new QVBoxLayout(homeView);
     QWidget *flowContainer = new QWidget(homeView);
     flowLayout = new FlowLayout(flowContainer, 10, 10, 10);
     flowContainer->setLayout(flowLayout);
+    flowContainer->setObjectName("FlowContainer");
 
     QScrollArea *scrollArea = new QScrollArea(homeView);
     scrollArea->setWidgetResizable(true);
@@ -102,6 +114,15 @@ void MainWindow::setupUI()
     stackedWidget->addWidget(homeView);
     setCentralWidget(stackedWidget);
 
+    QFile styleFile("src/gui/style/theme.qss");
+    if (!styleFile.exists()) {
+        styleFile.setFileName(QStringLiteral(":/gui/style/theme.qss"));
+    }
+    if (styleFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QString stylesheet = QString::fromUtf8(styleFile.readAll());
+        this->setStyleSheet(stylesheet);
+        styleFile.close();
+    }
 
     detailsView = nullptr;
 
@@ -187,13 +208,15 @@ void MainWindow::updateHomeView()
 
         MediaCardVisitor visitor;
         media->accept(visitor);
-        QPushButton *card = visitor.getWidget();
+        QWidget *card = visitor.getWidget();
         
         AbstractMedia* mediaPtr = media.get();
         
-        connect(card, &QPushButton::clicked, this, [this, mediaPtr]() {
-            onMediaItemClicked(mediaPtr);
-        });
+        if (QPushButton *imageButton = card->findChild<QPushButton*>("imageButton")) {
+            connect(imageButton, &QPushButton::clicked, this, [this, mediaPtr]() {
+                onMediaItemClicked(mediaPtr);
+            });
+        }
 
         flowLayout->addWidget(card);
         mediaCards.push_back(card);
@@ -212,6 +235,7 @@ void MainWindow::showDetailsView(AbstractMedia* media)
     }
 
     detailsView = new QWidget(this);
+    detailsView->setObjectName("DetailsView");
     QVBoxLayout *layout = new QVBoxLayout(detailsView);
 
     QString titleText;
@@ -254,14 +278,14 @@ void MainWindow::showDetailsView(AbstractMedia* media)
     formWidget->setObjectName("detailsForm");  
     layout->addWidget(formWidget);
 
-    // add banner path picker button next to bannerPath line edit
     QLineEdit* bannerEdit = formWidget->findChild<QLineEdit*>("bannerPath");
     if (bannerEdit) {
         QWidget* pickerContainer = new QWidget(detailsView);
         QHBoxLayout* pickerLayout = new QHBoxLayout(pickerContainer);
         pickerLayout->setContentsMargins(0,0,0,0);
         pickerLayout->addStretch();
-        QPushButton* pickButton = new QPushButton("Choose...", pickerContainer);
+        QPushButton* pickButton = new QPushButton("Choose Banner", pickerContainer);
+        pickButton->setIcon(QIcon(":/icons/addpath.png"));
         pickerLayout->addWidget(pickButton);
         layout->addWidget(pickerContainer);
 
@@ -269,7 +293,6 @@ void MainWindow::showDetailsView(AbstractMedia* media)
             QString path = FileBrowserDialog::getPath(FileBrowserDialog::SelectFile, this);
             if (path.isEmpty()) return;
 
-            // Try to copy into app data images folder first
             QString destPath = path;
             QString dataFolder = Manager::getInstance().getDefaultData();
             QDir imagesDir(QDir(dataFolder).filePath("images"));
@@ -281,7 +304,6 @@ void MainWindow::showDetailsView(AbstractMedia* media)
             QString baseName = srcInfo.fileName();
             QString candidate = imagesDir.filePath(baseName);
 
-            // avoid overwriting existing file by appending a suffix if needed
             if (QFile::exists(candidate)) {
                 QString base = srcInfo.completeBaseName();
                 QString suf = srcInfo.suffix();
@@ -303,7 +325,6 @@ void MainWindow::showDetailsView(AbstractMedia* media)
             if (copied) destPath = candidate;
 
             bannerEdit->setText(destPath);
-            // The change is only persisted when user presses Save
          });
     }
 
@@ -314,10 +335,12 @@ void MainWindow::showDetailsView(AbstractMedia* media)
     buttonLayout->addStretch();
 
     QPushButton *backButton = new QPushButton("Back", buttonContainer);
+    backButton->setIcon(QIcon(":/icons/back.png"));
     connect(backButton, &QPushButton::clicked, this, &MainWindow::onBackToHomeClicked);
     buttonLayout->addWidget(backButton);
 
     QPushButton *saveButton = new QPushButton("Save", buttonContainer);
+    saveButton->setIcon(QIcon(":/icons/save.png"));
     connect(saveButton, &QPushButton::clicked, this, &MainWindow::onSaveMediaClicked);
     buttonLayout->addWidget(saveButton);
 
@@ -351,7 +374,6 @@ void MainWindow::onHomeClicked()
 }
 
 void MainWindow::onExportClicked() {
-    // ask for directory to export to
     QString path = FileBrowserDialog::getPath(FileBrowserDialog::SelectDirectory, this);
     if (path.isEmpty()) return;
 
@@ -364,7 +386,7 @@ void MainWindow::onExportClicked() {
 }
 
 void MainWindow::onImportClicked() {
-    // ask for directory to import from
+
     QString path = FileBrowserDialog::getPath(FileBrowserDialog::SelectDirectory, this);
     if (path.isEmpty()) return;
 
@@ -373,7 +395,6 @@ void MainWindow::onImportClicked() {
         qWarning() << "Import failed from" << path;
     } else {
         qDebug() << "Imported from" << path;
-        // refresh view
         updateHomeView();
     }
 }
@@ -411,7 +432,6 @@ void MainWindow::onSaveMediaClicked()
 
     QMap<QString, QString> formData;
 
-    // Collect all QLineEdit fields (name, genre, bannerPath, rating (read-only), etc.)
     QList<QLineEdit*> lineEdits = formWidget->findChildren<QLineEdit*>();
     for (QLineEdit* edit : lineEdits) {
         QString key = edit->objectName();
@@ -419,8 +439,6 @@ void MainWindow::onSaveMediaClicked()
         formData[key] = edit->text();
         qDebug() << "LineEdit field:" << key << "=" << edit->text();
     }
-
-    // Date fields
     QList<QDateEdit*> dateEdits = formWidget->findChildren<QDateEdit*>();
     for (QDateEdit* edit : dateEdits) {
         QString key = edit->objectName();
@@ -429,8 +447,6 @@ void MainWindow::onSaveMediaClicked()
         qDebug() << "Date field:" << key << "=" << formData[key];
     }
 
-    // Time fields
-    // Prefer durationHours/durationMinutes spinboxes (movie duration), fall back to QTimeEdit if present
     QSpinBox* hoursSpin = formWidget->findChild<QSpinBox*>("durationHours");
     QSpinBox* minutesSpin = formWidget->findChild<QSpinBox*>("durationMinutes");
     if (hoursSpin || minutesSpin) {
@@ -451,7 +467,6 @@ void MainWindow::onSaveMediaClicked()
         }
     }
 
-    // QPlainTextEdit fields (description, comment)
     QList<QPlainTextEdit*> plainEdits = formWidget->findChildren<QPlainTextEdit*>();
     for (QPlainTextEdit* edit : plainEdits) {
         QString key = edit->objectName();
@@ -460,11 +475,18 @@ void MainWindow::onSaveMediaClicked()
         qDebug() << "PlainText field:" << key << "=" << formData[key];
     }
 
-    // If rating wasn't captured via QLineEdit, try QSlider value
+    // Collect combobox values (e.g., videogame mode)
+    QList<QComboBox*> comboBoxes = formWidget->findChildren<QComboBox*>();
+    for (QComboBox* cb : comboBoxes) {
+        QString key = cb->objectName();
+        if (key.isEmpty()) continue;
+        formData[key] = cb->currentText();
+        qDebug() << "ComboBox field:" << key << "=" << formData[key];
+    }
+
     if (!formData.contains("rating")) {
         QList<QSlider*> sliders = formWidget->findChildren<QSlider*>();
         for (QSlider* slider : sliders) {
-            // assume the slider controls rating if no explicit objectName for rating
             if (slider->objectName().isEmpty() || slider->objectName() == "ratingSlider") {
                 float realValue = slider->value() / 2.0f;
                 formData["rating"] = QString::number(realValue, 'f', 1);
@@ -474,7 +496,6 @@ void MainWindow::onSaveMediaClicked()
         }
     }
 
-    // Ensure we have type info
     if (currentMedia) {
         if (dynamic_cast<Book*>(currentMedia)) formData["type"] = "book";
         else if (dynamic_cast<Movie*>(currentMedia)) formData["type"] = "movie";

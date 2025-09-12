@@ -6,6 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon(":/icons/library.png"));  
     
     MainWindow w;
     MediaController controller(Manager::getInstance(), w);

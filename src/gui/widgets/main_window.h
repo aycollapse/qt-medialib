@@ -7,6 +7,7 @@
 #include <QToolButton>
 #include <QMenu>
 #include <QActionGroup>
+#include <QPushButton>
 #include "common/flow_layout.h"
 #include "search_bar.h"
 #include "../../core/models/abstract_media.h"
@@ -52,7 +53,7 @@ private:
     QToolButton *addMediaButton;
     AbstractMedia* currentMedia;
     QString selectedMediaType;  // Track type when creating new media
-    std::vector<QPushButton*> mediaCards; // Store media cards for filtering
+    std::vector<QWidget*> mediaCards; // Store media cards for filtering
 };
 
 #endif // MAIN_WINDOW_H

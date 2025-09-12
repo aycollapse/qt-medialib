@@ -1,7 +1,9 @@
 QT += core gui widgets
 CONFIG += c++17
 
-INCLUDEPATH += src
+
+INCLUDEPATH +=  $$PWD/src \
+                $$PWD/assets
 
 SOURCES += $$files(src/*.cpp) \
            $$files(src/core/models/*.cpp) \
@@ -22,6 +24,8 @@ HEADERS += $$files(src/*.h) \
            $$files(src/gui/widgets/common/*.h)\
            $$files(src/controller/*.h) \
            $$files(src/core/search/*.h)
+
+RESOURCES += src/resources.qrc
 
 OBJECTS_DIR = build/obj
 MOC_DIR = build/moc

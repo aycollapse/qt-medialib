@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="add.png">../assets/icons/add.png</file>
+        <file alias="addpath.png">../assets/icons/addpath.png</file>
+        <file alias="back.png">../assets/icons/back.png</file>
+        <file alias="home.png">../assets/icons/home.png</file>
+        <file alias="save.png">../assets/icons/save.png</file>
+        <file alias="search.png">../assets/icons/search.png</file>
+        <file alias="settings.png">../assets/icons/settings.png</file>
+        <file alias="help.png">../assets/icons/help.png</file>
+        <file alias="library.png">../assets/icons/library.png</file>
+    </qresource>
+</RCC>
