@@ -57,8 +57,8 @@ void MainWindow::setupUI()
     optionsMenu->setIcon(QIcon(":/icons/settings.png"));
     optionsMenu->setToolTipsVisible(true);
     optionsMenu->setToolTip("Options");
-    QAction *exportAction = new QAction(QIcon(":/icons/export.svg"), "Export", this);
-    QAction *importAction = new QAction(QIcon(":/icons/import.svg"), "Import", this);
+    QAction *exportAction = new QAction( "Export", this);
+    QAction *importAction = new QAction( "Import", this);
     connect(exportAction, &QAction::triggered, this, &MainWindow::onExportClicked);
     connect(importAction, &QAction::triggered, this, &MainWindow::onImportClicked);
     optionsMenu->addAction(exportAction);

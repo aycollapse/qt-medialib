@@ -1,0 +1,57 @@
+[
+    {
+        "bannerPath": "/home/collapse/.config/medialib/data/images/bloodborne_1.png",
+        "comment": "Assurdo",
+        "dateRelease": "2015-03-24",
+        "description": "Bloodborne is a 2015 action role-playing game developed by FromSoftware and published by Sony Computer Entertainment for the PlayStation 4. The game follows a Hunter through the decrepit Gothic, Victorian-era in Europe inspired city of Yharnam, whose inhabitants are afflicted with a blood-borne disease which transforms the residents into horrific beasts. Attempting to find the source of the plague, the player's character unravels the city's mysteries while fighting a variety of enemies.",
+        "gameDirector": "Hidetaka Miyazaki",
+        "genre": "RPG",
+        "id": "{5004a068-fd0f-42f6-8921-20703ff26131}",
+        "mode": "single-player",
+        "name": "Bloodborne",
+        "publisher": "sony",
+        "rating": 10,
+        "type": "videogame"
+    },
+    {
+        "bannerPath": "/home/collapse/.config/medialib/data/images/fallen angels.jpg",
+        "comment": "Bello oh",
+        "dateRelease": "1995-09-06",
+        "description": "A Hong Kong, un sicario comincia a rimpiangere la sua relazione con una donna. Un giorno, decide di lasciarsi tutto alle spalle e di andare a vivere con Punkie, una giovane donna cinese conosciuta in un bar.",
+        "director": "Wong Kar Wai",
+        "duration": "01:36:00",
+        "genre": "Drama",
+        "id": "{f8da1f92-c1e6-4dbe-adc8-97d8e5c4d00a}",
+        "language": "Chinese",
+        "name": "Fallen Angels",
+        "rating": 9,
+        "type": "movie"
+    },
+    {
+        "author": "Tolkien",
+        "bannerPath": "/home/collapse/.config/medialib/data/images/the hobbit.jpg",
+        "comment": "Stra lungo",
+        "dateRelease": "1937-09-21",
+        "description": "Una compagnia improbabile, fatta di nani e stregoni, parte per un lungo viaggio attraverso terre fantastiche, con l'obbiettivo di liberare un regno dalla tirannia di un drago",
+        "genre": "Drama Action",
+        "id": "{03b801da-f71e-448e-9bfb-e6f7557a7193}",
+        "isbn": "9780063388475",
+        "name": "The Hobbit",
+        "rating": 8.5,
+        "type": "book"
+    },
+    {
+        "bannerPath": "/home/collapse/.config/medialib/data/images/thewitcher3.png",
+        "comment": "ciaooo",
+        "dateRelease": "2022-01-21",
+        "description": "cool asf",
+        "gameDirector": "okok",
+        "genre": "RPG",
+        "id": "{11771d00-cea7-4a2b-82dc-f41df96140f3}",
+        "mode": "single-player",
+        "name": "The Witcher 3",
+        "publisher": "square enix",
+        "rating": 8.5,
+        "type": "videogame"
+    }
+]

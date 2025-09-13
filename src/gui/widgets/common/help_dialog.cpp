@@ -19,7 +19,8 @@ HelpDialog::HelpDialog(QWidget *parent)
           <li><b>Ctrl+F</b> — Focus search input</li>
           <li><b>Enter / Escape</b> — Exit search focus</li>
           <li><b>Ctrl+E</b> — Export library to a chosen directory</li>
-          <li><b>Ctrl+I</b> — Import library from a chosen directory</li>
+          <li><b>Ctrl+I</b> — Import library from a chosen directory</li> 
+          <li>(Note: import the data/ folder itself, not the subfolders)</li> 
         </ul>
         <p>Use the "Add Media" menu to create new items. Edit items by clicking them on the home view.</p>
     )");
