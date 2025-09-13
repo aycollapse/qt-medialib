@@ -1,6 +1,6 @@
 [
     {
-        "bannerPath": "/home/collapse/.config/medialib/data/images/bloodborne_1.png",
+        "bannerPath": "images/bloodborne_1.png",
         "comment": "Assurdo",
         "dateRelease": "2015-03-24",
         "description": "Bloodborne is a 2015 action role-playing game developed by FromSoftware and published by Sony Computer Entertainment for the PlayStation 4. The game follows a Hunter through the decrepit Gothic, Victorian-era in Europe inspired city of Yharnam, whose inhabitants are afflicted with a blood-borne disease which transforms the residents into horrific beasts. Attempting to find the source of the plague, the player's character unravels the city's mysteries while fighting a variety of enemies.",
@@ -14,7 +14,7 @@
         "type": "videogame"
     },
     {
-        "bannerPath": "/home/collapse/.config/medialib/data/images/fallen angels.jpg",
+        "bannerPath": "images/fallen angels.jpg",
         "comment": "Bello oh",
         "dateRelease": "1995-09-06",
         "description": "A Hong Kong, un sicario comincia a rimpiangere la sua relazione con una donna. Un giorno, decide di lasciarsi tutto alle spalle e di andare a vivere con Punkie, una giovane donna cinese conosciuta in un bar.",
@@ -29,7 +29,7 @@
     },
     {
         "author": "Tolkien",
-        "bannerPath": "/home/collapse/.config/medialib/data/images/the hobbit.jpg",
+        "bannerPath": "images/the hobbit.jpg",
         "comment": "Stra lungo",
         "dateRelease": "1937-09-21",
         "description": "Una compagnia improbabile, fatta di nani e stregoni, parte per un lungo viaggio attraverso terre fantastiche, con l'obbiettivo di liberare un regno dalla tirannia di un drago",
@@ -41,7 +41,7 @@
         "type": "book"
     },
     {
-        "bannerPath": "/home/collapse/.config/medialib/data/images/thewitcher3.png",
+        "bannerPath": "images/thewitcher3.png",
         "comment": "ciaooo",
         "dateRelease": "2022-01-21",
         "description": "cool asf",

@@ -67,7 +67,26 @@ bool Manager::saveData()
         media->accept(saveVisitor);
     }
 
-    QJsonDocument doc(saveVisitor.jsonArray);
+    //to make relative paths usable, without this the paths contain the /home/username/ so it doesnt work on other systems
+    QJsonArray outArray = saveVisitor.jsonArray;
+    for (int i = 0; i < outArray.size(); ++i) {
+        QJsonObject obj = outArray[i].toObject();
+        if (obj.contains("bannerPath") && obj["bannerPath"].isString()) {
+            QString bp = obj["bannerPath"].toString();
+            if (!bp.isEmpty()) {
+                QFileInfo bpInfo(bp);
+                if (bpInfo.isAbsolute()) {
+                    QString rel = QDir(dataFolder.absolutePath()).relativeFilePath(bp);
+                    if (!rel.startsWith("../")) {
+                        obj["bannerPath"] = rel;
+                        outArray[i] = obj;
+                    }
+                }
+            }
+        }
+    }
+
+    QJsonDocument doc(outArray);
     QFile file(userData);
     if (!file.open(QIODevice::WriteOnly)) 
     {
@@ -153,6 +172,13 @@ bool Manager::loadData()
         mediaVector.clear(); //clear otherwise the load appends to the current list
         for (auto &media : loadVisitor.loadedMedia) 
         {
+            // Resolve relative bannerPath values (e.g. "images/foo.png") into absolute paths
+            QString bp = media->getBannerPath();
+            if (!bp.isEmpty() && !QFileInfo(bp).isAbsolute()) {
+                QString abs = QDir(dataFolder.absolutePath()).filePath(bp);
+                media->setBannerPath(abs);
+            }
+
             qDebug() << "Loaded item" << media->getName() << "with Id" << media->getId().toString();
             mediaVector.push_back(std::move(media));
         }
