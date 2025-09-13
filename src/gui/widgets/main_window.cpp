@@ -64,6 +64,9 @@ void MainWindow::setupUI()
     optionsMenu->addAction(exportAction);
     optionsMenu->addAction(importAction);
     menuBar->addMenu(optionsMenu);
+    //for macos, bccause it wont show the bar without this
+    menuBar->setNativeMenuBar(false);
+
 
     QAction *helpAction = new QAction(QIcon(":/icons/help.png"), "", this);
     helpAction->setToolTip("Help");
@@ -114,10 +117,8 @@ void MainWindow::setupUI()
     stackedWidget->addWidget(homeView);
     setCentralWidget(stackedWidget);
 
-    QFile styleFile("src/gui/style/theme.qss");
-    if (!styleFile.exists()) {
-        styleFile.setFileName(QStringLiteral(":/gui/style/theme.qss"));
-    }
+    QFile styleFile(":/style/theme.qss");
+
     if (styleFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QString stylesheet = QString::fromUtf8(styleFile.readAll());
         this->setStyleSheet(stylesheet);

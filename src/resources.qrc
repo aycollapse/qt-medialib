@@ -10,4 +10,7 @@
         <file alias="help.png">../assets/icons/help.png</file>
         <file alias="library.png">../assets/icons/library.png</file>
     </qresource>
+    <qresource prefix="/style">
+        <file alias="theme.qss">gui/style/theme.qss</file>
+    </qresource>
 </RCC>
