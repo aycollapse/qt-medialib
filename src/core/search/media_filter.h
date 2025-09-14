@@ -16,7 +16,6 @@ public:
     };
 
     static bool matchesFilter(AbstractMedia* media, const FilterSettings& settings) {
-        // First check if this type is enabled
         MediaTypeVisitor typeVisitor;
         media->accept(typeVisitor);
         
@@ -37,12 +36,9 @@ public:
             return false;
         }
 
-        // If no search text, just return true (show all of enabled type)
         if (settings.searchText.isEmpty()) {
             return true;
         }
-
-        // Check if media matches search text using the search visitor
         SearchVisitor searchVisitor(settings.searchText);
         media->accept(searchVisitor);
         
